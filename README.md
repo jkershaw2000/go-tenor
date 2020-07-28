@@ -30,3 +30,6 @@ func main() {
     fmt.Println(data)
 }
 ```
+
+## Credits
+A lot of the code was adapted from sanzaru's go-giphy which can be found [here](https://github.com/sanzaru/go-giphy).
