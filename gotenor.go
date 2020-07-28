@@ -1,4 +1,3 @@
-// Package gotenor provides a wrapper for the tenor gif API in go.
 package gotenor
 
 import (
@@ -42,12 +41,11 @@ type Tenor struct {
 
 //_urlBuilder creates the url for the given requestType and parameters. It
 // returns a string containing the URL.
-func (t *Tenor) _urlBuilder(requestType string, params string) string {
-	var query string
-	if requestType == "singleId" {
-		query = "gifs?ids=" + params
+func (t *Tenor) _urlBuilder(action string) string {
+	if action != "" && action[0] != '/' {
+		action = action + "?"
 	}
-	return baseURL + query + "&key=" + t.apiKey
+	return baseURL + action + "key=" + t.apiKey
 }
 
 // _fetch Fetches the  API data from the given url.
@@ -94,7 +92,8 @@ func NewTenor(apiKey string) *Tenor {
 // GetById fetches GIF information based on the given ID
 // More inforation: https://tenor.com/gifapi/documentation#endpoints-gifs
 func (t *Tenor) GetById(id string) (*tenorData, error) {
-	body, err := t._fetch(t._urlBuilder("singleId", id))
+
+	body, err := t._fetch(t._urlBuilder("gifs") + "&ids=" + id)
 	if err != nil {
 		return nil, err
 	}
@@ -118,3 +117,13 @@ func GetAllGifURLS(data tenorData) []string {
 	}
 	return urls
 }
+
+// func main() {
+// 	t := NewTenor("3UZJ3K1PTHLN")
+
+// 	data, err := t.GetById("8776030,17437428")
+// 	if err != nil {
+// 		fmt.Println(err)
+// 	}
+// 	fmt.Println(GetGifURL(*data))
+// }
