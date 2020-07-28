@@ -101,3 +101,20 @@ func (t *Tenor) GetById(id string) (*tenorData, error) {
 
 	return t._parseData(body)
 }
+
+// GetGifURLS returns the URl of the 'gif' media
+// type from a given tenorData struct.
+// Always returns the URl of first gif in the data structure.
+func GetGifURL(data tenorData) string {
+	return data.Results[0].Media[0]["gif"].URL
+}
+
+// GetAllGifURLS retuns all the 'gif URLs found in a
+// tenorData struct.
+func GetAllGifURLS(data tenorData) []string {
+	var urls []string
+	for i := range data.Results {
+		urls = append(urls, data.Results[i].Media[0]["gif"].URL)
+	}
+	return urls
+}

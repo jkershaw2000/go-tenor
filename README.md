@@ -10,11 +10,10 @@ Returns all data about a GIF.
 ```go
 package main
 
-
 import (
+    "fmt"
     "github.com/jkershaw2000/go-tenor"
 )
-
 const (
     APIKey = "YOUR_API_KEY"
 )
@@ -25,10 +24,40 @@ func main() {
     gifID := "8776030"
     data, err := tenor.GetByID(gifID)
     if err != nil {
-        fmt.Println("Error: ". err)
+        fmt.Println("Error: ", err)
     }
     fmt.Println(data)
 }
+```
+
+### Get gif URL from tenorData structure
+There are two helper methods to get just the URLs for gifs to share.
+`GetGifURL(data tenorData)` - returns the first 'gif' url
+
+`GetAllGifURLS(data tenorData)` - returns all 'gif' urls found
+
+```go
+package main
+
+import (
+    "fmt"
+    "github.com/jkershaw2000/go-tenor"
+)
+const (
+    APIKey = "YOUR_API_KEY"
+)
+
+func main() {
+    tenor := gotenor.NewTenor(APIKey)
+    gifID := "8776030,17437428"
+    data, err := tenor.GetByID(gifID)
+    if err != nil {
+        fmt.Println("Error: ", err)
+    }
+    fmt.Println(libtenor.GetGifURL(*data)) // single URL
+    fmt.Println(libtenor.GetAllGifURLS(*data)) // All urls
+}
+
 ```
 
 ## Credits
